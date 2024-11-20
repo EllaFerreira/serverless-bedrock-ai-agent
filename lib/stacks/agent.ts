@@ -5,7 +5,7 @@ import * as path from "path";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { config } from "../config";
 import * as s3 from "aws-cdk-lib/aws-s3";
-import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
+import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
 
 export class BedrockAgentStack extends cdk.Stack {
   public bucket: s3.Bucket;
@@ -83,7 +83,7 @@ export class BedrockAgentStack extends cdk.Stack {
       description: "The agent for tech support.",
       foundationModel:
         bedrock.BedrockFoundationModel.ANTHROPIC_CLAUDE_HAIKU_V1_0,
-      instruction: `You are a support engineer, and you need to help users with their support issues. You should be able to search for past tickets an provide insights to the user.`,
+      instruction: `You are a support engineer, and you need to help users with their support issues. You should be able to use the common support issues guide and you should be able to query patient information an provide insights to the user.`,
       idleSessionTTL: cdk.Duration.minutes(10),
       knowledgeBases: [kb],
       shouldPrepareAgent: true,
@@ -91,8 +91,8 @@ export class BedrockAgentStack extends cdk.Stack {
       actionGroups: [agentActionGroup],
     });
 
-     // create the s3 bucket to store the data as a source for the bedrock knowledge base
-     this.bucket = new s3.Bucket(this, "BedrockDataBucket", {
+    // create the s3 bucket to store the data as a source for the bedrock knowledge base
+    this.bucket = new s3.Bucket(this, "BedrockDataBucket", {
       bucketName: "bedrock-data-support-bucket",
       autoDeleteObjects: true,
       removalPolicy: cdk.RemovalPolicy.DESTROY,

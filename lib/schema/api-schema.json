@@ -117,11 +117,48 @@
                                         "name": {
                                             "type": "string",
                                             "description": "The name of the patient."
+                                        },
+                                        "active": {
+                                            "type": "number",
+                                            "description": "The status of the patient."
+                                        },
+                                        "discharge_reason": {
+                                            "type": "string",
+                                            "description": "The reason the patient was discharged."
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update the status of a specific patient.",
+                "description": "This tool is used to update the patient information. Can be used to update any of the available fields.",
+                "operationId": "updatePatientByCode",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "active": {
+                                        "type": "number",
+                                        "description": "The status of the patient."
+                                    }
+                                },
+                                "required": [
+                                    "active"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Patient updated successfully!"
                     }
                 }
             }

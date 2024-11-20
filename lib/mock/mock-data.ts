@@ -11,6 +11,8 @@ type Patient = {
   id: number;
   code: string;
   name: string;
+  active: number;
+  discharge_reason?: string;
 };
 
 type Order = {
@@ -114,51 +116,15 @@ export const patients: Patient[] = [
     id: 1,
     code: "P001",
     name: "John Doe",
+    active: 0,
+    discharge_reason: "Medical condition",
   },
   {
     id: 2,
     code: "P002",
     name: "Jane Doe",
-  },
-  {
-    id: 3,
-    code: "P003",
-    name: "John Smith",
-  },
-  {
-    id: 4,
-    code: "P004",
-    name: "Jane Smith",
-  },
-  {
-    id: 5,
-    code: "P005",
-    name: "John Brown",
-  },
-  {
-    id: 6,
-    code: "P006",
-    name: "Jane Brown",
-  },
-  {
-    id: 7,
-    code: "P007",
-    name: "John White",
-  },
-  {
-    id: 8,
-    code: "P008",
-    name: "Jane White",
-  },
-  {
-    id: 9,
-    code: "P009",
-    name: "John Green",
-  },
-  {
-    id: 10,
-    code: "P010",
-    name: "Jane"
+    active: 1,
+    discharge_reason: undefined,
   }
 ];
 export const orders: Order[] = [

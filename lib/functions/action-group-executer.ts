@@ -74,6 +74,9 @@ const actionGroupExecutor = async ({
         if (httpMethod === "GET") {
           body = patients[0];
         }
+        if (httpMethod === "PUT") {
+          body = {...patients[0], active: 1};
+        }
         break;
 
       case "/orders":
@@ -82,11 +85,11 @@ const actionGroupExecutor = async ({
         }
         break;
 
-      case "/jira-tickets":
-        if (httpMethod === "GET") {
-          body = new JiraService().fetchJiraTickets(inputText);
-        }
-        break;
+      // case "/jira-tickets":
+      //   if (httpMethod === "GET") {
+      //     body = new JiraService().fetchJiraTickets(inputText);
+      //   }
+      //   break;
 
       default:
         httpStatusCode = 500;

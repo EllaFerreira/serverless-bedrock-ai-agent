@@ -1,5 +1,6 @@
 import middy from "@middy/core";
-import { orders, patients, tickets } from "../data/mock-data";
+import { orders, patients, tickets } from "../mock/mock-data";
+import { JiraService } from "../jira";
 
 interface Event {
   messageVersion: string;
@@ -69,14 +70,6 @@ const actionGroupExecutor = async ({
     );
 
     switch (apiPath) {
-      case "/tickets":
-        if (httpMethod === "GET") {
-          body = tickets;
-        } else if (httpMethod === "POST") {
-          body = tickets.find((ticket) => ticket.code === "109");
-        }
-        break;
-
       case "/patient":
         if (httpMethod === "GET") {
           body = patients[0];
@@ -86,6 +79,12 @@ const actionGroupExecutor = async ({
       case "/orders":
         if (httpMethod === "GET") {
           body = orders;
+        }
+        break;
+
+      case "/jira-tickets":
+        if (httpMethod === "GET") {
+          body = new JiraService().fetchJiraTickets(inputText);
         }
         break;
 

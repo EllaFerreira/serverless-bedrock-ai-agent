@@ -1,6 +1,6 @@
 import middy from "@middy/core";
 import { orders, patients, tickets } from "../mock/mock-data";
-import { JiraService } from "../jira";
+// import { JiraService } from "../jira";
 
 interface Event {
   messageVersion: string;
@@ -34,7 +34,6 @@ interface Event {
   sessionAttributes: Record<string, string>;
   promptSessionAttributes: Record<string, string>;
 }
-
 interface Response {
   messageVersion: string;
   response: {
@@ -75,7 +74,7 @@ const actionGroupExecutor = async ({
           body = patients[0];
         }
         if (httpMethod === "PUT") {
-          body = {...patients[0], active: 1};
+          body = { ...patients[0], active: 1 };
         }
         break;
 
@@ -90,6 +89,14 @@ const actionGroupExecutor = async ({
       //     body = new JiraService().fetchJiraTickets(inputText);
       //   }
       //   break;
+
+      case "/jira-tickets":
+        if (httpMethod === "GET") {
+          body = tickets;
+        } else if (httpMethod === "POST") {
+          body = tickets.find((ticket) => ticket.code === "109");
+        }
+        break;
 
       default:
         httpStatusCode = 500;

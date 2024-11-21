@@ -117,7 +117,7 @@ export const patients: Patient[] = [
     code: "P001",
     name: "John Doe",
     active: 0,
-    discharge_reason: "Medical condition",
+    discharge_reason: "Medical Condition",
   },
   {
     id: 2,

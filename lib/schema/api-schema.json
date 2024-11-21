@@ -98,6 +98,7 @@
                 "summary": "Get the information of a specific patient.",
                 "description": "Get the information of a specific patient.",
                 "operationId": "getPatientByCode",
+                "x-requireConfirmation": "ENABLED",
                 "responses": {
                     "200": {
                         "description": "Gets a patient for a specific code.",

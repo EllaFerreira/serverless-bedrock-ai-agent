@@ -13,14 +13,21 @@ WHY: The order can be stuck in "Awaiting token" status due to the following reas
 
 
 # 2. Revert patient discharged:
-WHY: The need to revert the patient discharge is due to the following reasons:
-- The patient wants to be reinstated in the system.
-- The patient was discharged due to an human error.
+## Purpose:
 
-## How to resolve (steps):
-1. Check the patient profile if the patient is inactive. 
-2. Check why the patient was discharged. If the patient has a reason "Medical condition", you should let the patient know that the revert is not possible.
-3. Only revert the patient discharge if the discharge reason is not equal to "Medical condition".
+The purpose of this document is to provide explicit instructions for handling patient discharge reversals. This guide details the scenarios in which a discharge can be reverted and cannot be reverted, outlining specific checks that must be performed.
+
+## Allowed Reasons for Reversion:
+• Discharges that are due to reasons such as human error or patient request can be reverted.
+• Ensure the patient discharge reason does not match "Medical condition" before proceeding with any changes.
+
+## Conditions for Reverting a Discharge:
+
+1. Verify Patient Active Status and Discharge Reason:
+• Check if the patient is currently marked as inactive (e.g., active: 0). Only inactive patients should be considered for discharge reversion. Check if the patient discharge reason is "Medical condition". If the discharge reason is "Medical condition", the reversion request must be denied.
+
+
+
 
 
 

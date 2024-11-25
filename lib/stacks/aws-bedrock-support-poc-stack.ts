@@ -16,7 +16,6 @@ import { Construct } from "constructs";
 const API_ID = "BedrockApi";
 const REST_API_NAME = "AWS Bedrock API Gateway Support";
 const RESOURCE_NAME = "api";
-const bedrockModelArn = process.env.BEDROCK_MODEL_ARN || "";
 export class AwsBedrockSupportPocStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);

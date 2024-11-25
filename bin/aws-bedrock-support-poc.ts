@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { AwsBedrockSupportPocStack } from '../lib/aws-bedrock-support-poc-stack';
+import { AwsBedrockSupportPocStack } from '../lib/stacks/aws-bedrock-support-poc-stack';
 import { BedrockAgentStack } from '../lib/stacks/agent';
 
 const app = new cdk.App();

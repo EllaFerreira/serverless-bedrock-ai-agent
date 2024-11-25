@@ -1,204 +1,312 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Tech support tool to help with tickets suggestions for tickets, patients and orders.",
-        "version": "1.0.0",
-        "description": "APIs for managing tickets, patients and orders."
-    },
-    "paths": {
-        "/jira-tickets": {
-            "get": {
-                "summary": "Get a list of all Jira tickets containing a specific keyword.",
-                "description": "Get the list of all Jira tickets containing a specific keyword.",
-                "operationId": "getJiraTickets",
-                "responses": {
-                    "200": {
-                        "description": "Gets the list of Jira tickets for the giver query.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "number",
-                                                "description": "Unique ID of the ticket."
-                                            },
-                                            "code": {
-                                                "type": "string",
-                                                "description": "The unique code of the ticket."
-                                            },
-                                            "title": {
-                                                "type": "string",
-                                                "description": "The title of the ticket."
-                                            },
-                                            "description": {
-                                                "type": "string",
-                                                "description": "The description of the ticket."
-                                            },
-                                            "status": {
-                                                "type": "string",
-                                                "description": "The status of the ticket."
-                                            },
-                                            "category": {
-                                                "type": "string",
-                                                "description": "The category of the ticket."
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "summary": "Create a new ticket",
-                "description": "Create a ticket for a specific patient.",
-                "operationId": "createTicket",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Tech support tool to help with tickets suggestions for tickets, patients and orders.",
+    "version": "1.0.0",
+    "description": "APIs for managing tickets, patients and orders."
+  },
+  "paths": {
+    "/jira-tickets": {
+      "get": {
+        "summary": "Get a list of all Jira tickets containing a specific keyword.",
+        "description": "Get the list of all Jira tickets containing a specific keyword.",
+        "operationId": "getJiraTickets",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Keyword to search for in Jira tickets.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Jira issues",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "expand": {
+                      "type": "string",
+                      "example": "schema,names"
+                    },
+                    "startAt": {
+                      "type": "integer",
+                      "example": 0
+                    },
+                    "maxResults": {
+                      "type": "integer",
+                      "example": 15
+                    },
+                    "total": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "issues": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "expand": {
+                            "type": "string",
+                            "example": "operations,versionedRepresentations,editmeta,changelog,renderedFields"
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "54501"
+                          },
+                          "self": {
+                            "type": "string",
+                            "format": "uri",
+                            "example": "https://montugroup.atlassian.net/rest/api/2/issue/54501"
+                          },
+                          "key": {
+                            "type": "string",
+                            "example": "SUPPORTSTG-299"
+                          },
+                          "fields": {
+                            "type": "object",
+                            "properties": {
+                              "summary": {
+                                "type": "string",
+                                "example": "Out of Repeats"
+                              },
+                              "comment": {
                                 "type": "object",
                                 "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "description": "Title of the ticket"
-                                    },
-                                    "category": {
-                                        "type": "string",
-                                        "description": "Category of the ticket"
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "description": "Description of the ticket"
+                                  "comments": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object"
                                     }
-                                },
-                                "required": [
-                                    "title",
-                                    "category",
-                                    "description"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Ticket created successfully!"
-                    }
-                }
-            }
-        },
-        "/patient": {
-            "get": {
-                "summary": "Get the information of a specific patient.",
-                "description": "Get the information of a specific patient.",
-                "operationId": "getPatientByCode",
-                "x-requireConfirmation": "ENABLED",
-                "responses": {
-                    "200": {
-                        "description": "Gets a patient for a specific code.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
+                                  },
+                                  "self": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "example": "https://montugroup.atlassian.net/rest/api/2/issue/54501/comment"
+                                  },
+                                  "maxResults": {
+                                    "type": "integer",
+                                    "example": 0
+                                  },
+                                  "total": {
+                                    "type": "integer",
+                                    "example": 0
+                                  },
+                                  "startAt": {
+                                    "type": "integer",
+                                    "example": 0
+                                  }
+                                }
+                              },
+                              "status": {
+                                "type": "object",
+                                "properties": {
+                                  "self": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "example": "https://montugroup.atlassian.net/rest/api/2/status/10049"
+                                  },
+                                  "description": {
+                                    "type": "string",
+                                    "example": "This was auto-generated by Jira Service Management during workflow import"
+                                  },
+                                  "iconUrl": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "example": "https://montugroup.atlassian.net/images/icons/status_generic.gif"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Waiting for support"
+                                  },
+                                  "id": {
+                                    "type": "string",
+                                    "example": "10049"
+                                  },
+                                  "statusCategory": {
                                     "type": "object",
                                     "properties": {
-                                        "id": {
-                                            "type": "number",
-                                            "description": "Unique ID of the patient."
-                                        },
-                                        "code": {
-                                            "type": "string",
-                                            "description": "The unique code of the patient."
-                                        },
-                                        "name": {
-                                            "type": "string",
-                                            "description": "The name of the patient."
-                                        },
-                                        "active": {
-                                            "type": "number",
-                                            "description": "The status of the patient."
-                                        },
-                                        "discharge_reason": {
-                                            "type": "string",
-                                            "description": "The reason the patient was discharged."
-                                        }
+                                      "self": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "example": "https://montugroup.atlassian.net/rest/api/2/statuscategory/4"
+                                      },
+                                      "id": {
+                                        "type": "integer",
+                                        "example": 4
+                                      },
+                                      "key": {
+                                        "type": "string",
+                                        "example": "indeterminate"
+                                      },
+                                      "colorName": {
+                                        "type": "string",
+                                        "example": "yellow"
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "example": "In Progress"
+                                      }
                                     }
+                                  }
                                 }
+                              }
                             }
+                          }
                         }
+                      }
                     }
+                  }
                 }
-            },
-            "put": {
-                "summary": "Update the status of a specific patient.",
-                "description": "This tool is used to update the patient information. Can be used to update any of the available fields.",
-                "operationId": "updatePatientByCode",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "active": {
-                                        "type": "number",
-                                        "description": "The status of the patient."
-                                    }
-                                },
-                                "required": [
-                                    "active"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Patient updated successfully!"
-                    }
-                }
+              }
             }
-        },
-        "/orders": {
-            "get": {
-                "summary": "Get a list of orders for a specific patient.",
-                "description": "Get a list of orders for a specific patient.",
-                "operationId": "getOrdersByPatientCode",
-                "responses": {
-                    "200": {
-                        "description": "Gets a list of orders for a specific patient.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "number",
-                                                "description": "Unique ID of the order."
-                                            },
-                                            "code": {
-                                                "type": "string",
-                                                "description": "The unique code of the order."
-                                            },
-                                            "patient_id": {
-                                                "type": "number",
-                                                "description": "The ID of the patient."
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
+      },
+      "post": {
+        "summary": "Create a new ticket",
+        "description": "Create a ticket for a specific patient.",
+        "operationId": "createTicket",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Title of the ticket"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Category of the ticket"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the ticket"
+                  }
+                },
+                "required": ["title", "category", "description"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created successfully!"
+          }
+        }
+      }
+    },
+    "/patient": {
+      "get": {
+        "summary": "Get the information of a specific patient.",
+        "description": "Get the information of a specific patient.",
+        "operationId": "getPatientByCode",
+        "responses": {
+          "200": {
+            "description": "Gets a patient for a specific code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "description": "Unique ID of the patient."
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "The unique code of the patient."
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the patient."
+                    },
+                    "active": {
+                      "type": "number",
+                      "description": "The status of the patient."
+                    },
+                    "discharge_reason": {
+                      "type": "string",
+                      "description": "The reason the patient was discharged."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update the status of a specific patient.",
+        "description": "This tool is used to update the patient information. Can be used to update any of the available fields.",
+        "operationId": "updatePatientByCode",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "number",
+                    "description": "The status of the patient."
+                  }
+                },
+                "required": ["active"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Patient updated successfully!"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "summary": "Get a list of orders for a specific patient.",
+        "description": "Get a list of orders for a specific patient.",
+        "operationId": "getOrdersByPatientCode",
+        "responses": {
+          "200": {
+            "description": "Gets a list of orders for a specific patient.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "description": "Unique ID of the order."
+                      },
+                      "code": {
+                        "type": "string",
+                        "description": "The unique code of the order."
+                      },
+                      "patient_id": {
+                        "type": "number",
+                        "description": "The ID of the patient."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
+  }
 }

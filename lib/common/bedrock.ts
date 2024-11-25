@@ -22,7 +22,7 @@ type RequestPayload = {
 
 export const sendPrompt = async (request: RequestPayload) => {
   try {
-    console.log('Request:', request);
+    console.log('Request ::', request);
     const {
       sessionAttributes,
       promptSessionAttributes,
@@ -49,9 +49,14 @@ export const sendPrompt = async (request: RequestPayload) => {
     const chunks = [];
     const completion = response.completion || [];
 
-    for await (const chunk of completion) {
-      if (chunk.chunk && chunk.chunk.bytes) {
-        const parsed = parseBase64(chunk.chunk.bytes);
+    console.log('Agent response:', response);
+
+    for await (const chunkEvent of completion) {
+      if (chunkEvent.chunk && chunkEvent.chunk.bytes) {
+        console.log('Chunk1:');
+        const parsed = parseBase64(chunkEvent.chunk.bytes);
+
+        console.log('Chunk2:');
 
         chunks.push(parsed);
       }

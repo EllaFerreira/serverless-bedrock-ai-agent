@@ -1,10 +1,5 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyHandlerV2 } from "aws-lambda";
+import { APIGatewayProxyEventV2 } from "aws-lambda";
 import { sendPrompt } from "../common/bedrock";
-import { ResponseStream, streamifyResponse } from "lambda-stream";
-
-type Event = {
-  prompt: string;
-};
 
 export const handler = async ({ body }: APIGatewayProxyEventV2) => {
   try {

@@ -4,7 +4,6 @@ import { z } from "zod";
 dotenv.config();
 
 const configSchema = z.object({
-  BEDROCK_MODEL_ARN: z.string().min(1, "BEDROCK_MODEL_ARN is required"),
   PINECONE_API_KEY: z.string().min(1, "PINECONE_API_KEY is required"),
   PINECONE_CONNECTION_STRING: z
     .string()

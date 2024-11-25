@@ -12,6 +12,16 @@ export class BedrockAgentStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const serviceName = "BedrockAgentService";
+
+    // add our lambda config
+    const lambdaConfig = {
+      LOG_LEVEL: "INFO",
+      POWERTOOLS_LOGGER_LOG_EVENT: "true",
+      POWERTOOLS_LOGGER_SAMPLE_RATE: "1",
+      POWERTOOLS_SERVICE_NAME: serviceName,
+    };
+
     //create secret manager
     const pineconeSecret = new cdk.aws_secretsmanager.Secret(
       this,
@@ -55,6 +65,11 @@ export class BedrockAgentStack extends cdk.Stack {
         },
         environment: {
           NODE_ENV: "production",
+          JIRA_ACCESS_TOKEN_CREATOR_EMAIL: config.JIRA_ACCESS_TOKEN_CREATOR_EMAIL,
+          JIRA_ACCESS_TOKEN: config.JIRA_ACCESS_TOKEN,
+          JIRA_BASE_URL: config.JIRA_BASE_URL,
+          JIRA_SUPPORT_BOARD_KEY: config.JIRA_SUPPORT_BOARD_KEY,
+          ...lambdaConfig,
         },
       }
     );

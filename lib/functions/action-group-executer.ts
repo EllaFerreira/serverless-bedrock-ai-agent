@@ -1,6 +1,8 @@
 import middy from "@middy/core";
-import { orders, patients, tickets } from "../mock/mock-data";
-// import { JiraService } from "../jira";
+import { orders, patients } from "../mock/mock-data";
+import { JiraService } from "../jira";
+import { logger } from "../logger";
+import { injectLambdaContext } from "@aws-lambda-powertools/logger/middleware";
 
 interface Event {
   messageVersion: string;
@@ -59,12 +61,13 @@ const actionGroupExecutor = async ({
   messageVersion,
   sessionAttributes,
   promptSessionAttributes,
+  parameters,
 }: Event): Promise<Response> => {
   let body;
   let httpStatusCode = 200;
 
   try {
-    console.info(
+    logger.info(
       `inputText: ${inputText}, apiPath: ${apiPath}, httpMethod: ${httpMethod}`
     );
 
@@ -84,17 +87,11 @@ const actionGroupExecutor = async ({
         }
         break;
 
-      // case "/jira-tickets":
-      //   if (httpMethod === "GET") {
-      //     body = new JiraService().fetchJiraTickets(inputText);
-      //   }
-      //   break;
-
       case "/jira-tickets":
         if (httpMethod === "GET") {
-          body = tickets;
-        } else if (httpMethod === "POST") {
-          body = tickets.find((ticket) => ticket.code === "109");
+          logger.info("inputText", inputText);
+          const value = parameters.length ? parameters[0].value : '';
+          body = await new JiraService().fetchJiraTickets(value);
         }
         break;
 
@@ -124,9 +121,9 @@ const actionGroupExecutor = async ({
   } catch (error) {
     let errorMessage = "Unknown error";
     if (error instanceof Error) errorMessage = error.message;
-    console.error(errorMessage);
+    logger.error(errorMessage);
 
     throw error;
   }
 };
-export const handler = middy(actionGroupExecutor);
+export const handler = middy(actionGroupExecutor).use(injectLambdaContext(logger))
